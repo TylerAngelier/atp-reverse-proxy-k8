@@ -1,0 +1,14 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: atp-nginx-ingressroute
+  namespace: traefik
+spec:
+  entryPoints:
+    - web
+  routes:
+    - match: Host(`apex.trangelier.dev`)
+      kind: Rule
+      services:
+        - name: atp-reverse-proxy-nginx
+          port: 80

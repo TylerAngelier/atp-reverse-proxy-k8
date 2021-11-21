@@ -1,0 +1,43 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: atp-reverse-proxy-nginx
+  namespace: traefik
+spec:
+  type: ClusterIP
+  selector:
+    name: atp-reverse-proxy-nginx
+  ports:
+    - protocol: TCP
+      port: 80
+      name: http
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: atp-reverse-proxy-nginx
+  namespace: traefik
+  labels:
+    app: atp-reverse-proxy-nginx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: atp-reverse-proxy-nginx
+  template:
+    metadata:
+      labels:
+        name: atp-reverse-proxy-nginx
+    spec:
+      containers:
+        - name: atp-reverse-proxy-nginx
+          image: registry.hub.docker.com/libray/nginx:stable-alpine
+          volumeMounts:
+            - mountPath: /etc/nginx/nginx.conf
+              name: nginx-conf
+              subPath: nginx.conf
+      volumes:
+        - configMap:
+            name: atp-reverse-proxy-nginx-conf
+          name: nginx-conf
