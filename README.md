@@ -1,5 +1,12 @@
 # Reverse Proxy for OCI ATP
 
+## Purpose
+
+When Oracle first announced all of the [free-tier resources](https://www.oracle.com/cloud/free/) they offer I immediately jumped on the offer. Thankfully, [Dimitri Gielis](https://twitter.com/dgielis?lang=en) had already started on his AMAZING [Best and Cheapest Oracle APEX hosting: Free Oracle Cloud](https://dgielis.blogspot.com/2019/09/best-and-cheapest-oracle-apex-hosting.html) blog post series. While I don't use things like APEX Office Print - his guides on using a compute instance as a nginx reverse proxy were super helpful.
+
+Now that I've configured an [OKE](https://www.oracle.com/cloud-native/container-engine-kubernetes/) cluster (on ARM for free!) and use an [OCI Load Balancer](https://docs.oracle.com/en-us/iaas/Content/Balance/Concepts/balanceoverview.htm) to route my OCI traffic - I wanted to move the simple Nginx reverse proxy into Kubernetes. This repo is quite simple and creates a nginx service with a custom config file. I also use [Traefik](https://traefik.io/traefik/), so it creates a Traefik IngressRoute for my subdomain.
+
+## How to use
 You need to create a config map that the deployment uses.
 
 ```
